@@ -1,0 +1,46 @@
+language: objective-c
+os: osx
+osx_image: xcode11.3
+rvm: 2.5.3
+
+cache:
+  bundler: true
+  directories:
+  - .build # Swift Package Manager
+  - /Users/travis/.rvm/ # RVM
+  - $HOME/Library/Caches/Homebrew # brew
+
+env:
+  global:
+    - SOURCE_FOLDER_PATH="./"
+    - TARGET_FOLDER_PATH="./"
+    - GH_USER_NAME="Client Engineering Bot"
+    - GH_USER_EMAIL="client-engineering@pubnub.com"
+
+
+before_install:
+  - gem install -v 2.0.1 bundler
+  - bundle install && brew bundle
+  - bundle exec fastlane setup_keys
+
+
+stages:
+  - name: Validate
+    if: tag IS blank
+
+jobs:
+  include:
+    - stage: Validate
+      name: Lint
+      script: bundle exec fastlane lint
+#    - stage: "Unit Tests"
+#      name: iOS
+#      before_script: xcrun simctl list -j
+#      script: bundle exec fastlane test
+
+
+before_cache:
+  - rvm cleanup all
+  - bundle clean
+  - swift package clean
+  - brew cleanup

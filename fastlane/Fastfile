@@ -1,0 +1,63 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+@scheme = "TeamChat"
+@project = "TeamChat.xcodeproj"
+
+desc "Steps taken to setup the project after initial clone; only needs to be ran once"
+lane :setup do
+  setup_keys
+  populate_default_data
+end
+
+desc "Populates default data onto your keyset"
+lane :populate_default_data do
+  Dir.chdir("..") do
+    if !File.exist?("setup/pubnub-keys.json")
+      File.open("setup/pubnub-keys.json", "w") do |f|
+        f.write("{\"publishKey\":\"#{ENV["TEAM_CHAT_PUB_KEY"]}\",\"subscribeKey\":\"#{ENV["TEAM_CHAT_SUB_KEY"]}\"}")
+      end
+      puts Action.sh("npm run setup")
+    else
+      puts Action.sh("npm start")
+    end
+  end
+end
+
+desc "Sets PubNub keys from ENV variables inside the project "
+lane :setup_keys do
+  Dir.chdir("..") do
+    Action.sh("gyb --line-directive '' -o TeamChat/Environment.swift TeamChat/Environment.swift.gyb")
+  end
+end
+
+desc "Lints the project source files"
+lane :lint do
+  Dir.chdir("..") do
+    Action.sh("swiftformat")
+  end
+  swiftlint
+end
+
+desc "Executes Unit Tests"
+lane :test do
+  scan(
+    project: @project,
+    scheme: @scheme,
+    destination: "platform=iOS Simulator,name=iPhone 11"
+  )
+end
