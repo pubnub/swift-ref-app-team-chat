@@ -1,6 +1,6 @@
 # PubNub Team Chat
 
-Team Chat is our group chat app with features like user login, joining/leaving group conversations, send/receive messages, members online/offline presence, profanity filtering and more. Its UIs are built in SwiftUI, and it uses the PubNub Client State Management framework to manage client state on the application.
+Team Chat is our group chat app with features like user login, joining/leaving group conversations, send/receive messages, members online/offline presence, profanity filtering and more. Its UIs are built in SwiftUI, and it uses the [PubNub Client State Management](https://github.com/pubnub/pubnub-swift-csm) framework to manage client state on the application.
 
 
 ![Team Chat Message View](swift-team-chat-messages.png) | ![Team Chat Channel Memberships](swift-team-chat-conversations.png)
@@ -9,9 +9,9 @@ Team Chat is our group chat app with features like user login, joining/leaving g
 
 The application demonstrates how to build a chat application using:
 
-- PubNub
-- SwiftUI
-- ReSwift
+- [PubNub Chat](https://www.pubnub.com/products/pubnub-chat/)
+- [SwiftUI](https://developer.apple.com/xcode/swiftui/)
+- [ReSwift](https://github.com/ReSwift/ReSwift)
 
 ## Prerequisites
 
@@ -74,4 +74,4 @@ To run this application you must obtain publish and subscribe keys from your Pub
 
 ## Further Information
 
-Visit the [PubNub Chat Docs](https://www.pubnub.com/docs/chat/quickstart) page for more information about how to use SwiftUI and the PubNub Client State Management framework to add in-app chat to your applications.
+Visit the [PubNub Chat Docs](https://www.pubnub.com/docs/chat/quickstart) page for more information about how to use SwiftUI and the [PubNub Client State Management](https://github.com/pubnub/pubnub-swift-csm) framework to add in-app chat to your applications.
